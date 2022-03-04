@@ -34,8 +34,8 @@
     <tbody th:each="promotion : ${promotions}">
         <tr>
             <td th:text="${promotion.title}"></td>
-            <td th:text="${promotion.timeStart}"></td>
-            <td th:text="${promotion.timeEnd}"></td>
+            <td th:text="${#dates.format(promotion.timeStart, 'dd-MM-yyyy')}"></td>
+            <td th:text="${#dates.format(promotion.timeEnd, 'dd-MM-yyyy')}"></td>
             <td th:text="${promotion.value}"></td>
             <td th:text="${promotion.description}"></td>
             <td><a th:href="@{/edit/__${promotion.id}__ }">Edit</a></td>

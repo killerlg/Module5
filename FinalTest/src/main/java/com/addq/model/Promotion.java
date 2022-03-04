@@ -7,6 +7,7 @@ import org.springframework.validation.Validator;
 
 import javax.persistence.*;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -110,11 +111,15 @@ public class Promotion implements Validator {
         if (timeEnd.before(timeStart) || timeEnd.equals(timeStart)) {
             errors.rejectValue("timeEnd", "timeEnd.before");
         }
-        Date date = new Date();
+
+        Date date = new Date(System.currentTimeMillis()-24*60*60*1000);
         date.setHours(0);
         date.setMinutes(0);
         date.setSeconds(0);
-        if (timeStart.before(date)) {
+        if (timeStart.compareTo(date) <= 0) {
+            System.out.println(date.compareTo(timeStart));
+            System.out.println(date);
+            System.out.println(timeStart);
             errors.rejectValue("timeStart", "timeStart.before");
         }
     }
