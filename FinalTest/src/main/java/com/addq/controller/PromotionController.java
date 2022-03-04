@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -37,13 +39,23 @@ public class PromotionController {
         return  modelAndView;
     }
     @PostMapping("save")
-    public ModelAndView save(@ModelAttribute("promotion") Promotion promotion) {
-        promotionService.save(promotion);
+    public ModelAndView save(@Valid @ModelAttribute("promotion") Promotion promotion, BindingResult bindingResult) {
+        new Promotion().validate(promotion, bindingResult);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("create");
-        modelAndView.addObject("promotion", promotion);
-        modelAndView.addObject("message","Add Success!");
-        return modelAndView;
+        if (bindingResult.hasFieldErrors()){
+            modelAndView.setViewName("create");
+            modelAndView.addObject("promotion", promotion);
+            modelAndView.addObject("message","Add Fail!");
+            return modelAndView;
+        }
+        else {
+            promotionService.save(promotion);
+            modelAndView.setViewName("create");
+            modelAndView.addObject("promotion", promotion);
+            modelAndView.addObject("message","Add Success!");
+            return modelAndView;
+        }
+
     }
 
     @GetMapping("edit/{id}")
@@ -54,13 +66,22 @@ public class PromotionController {
         return  modelAndView;
     }
     @PostMapping("edit")
-    public ModelAndView saveEdit(@ModelAttribute("promotion") Promotion promotion) {
-        promotionService.save(promotion);
+    public ModelAndView saveEdit(@Valid @ModelAttribute("promotion") Promotion promotion,BindingResult bindingResult) {
+        new Promotion().validate(promotion, bindingResult);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("promotion",promotion);
-        modelAndView.addObject("message","Edit Success");
-        modelAndView.setViewName("edit");
-        return  modelAndView;
+        if (bindingResult.hasFieldErrors()){
+            modelAndView.setViewName("edit");
+            modelAndView.addObject("promotion", promotion);
+            modelAndView.addObject("message","Edit Fail!");
+            return modelAndView;
+        }
+        else {
+            promotionService.save(promotion);
+            modelAndView.setViewName("create");
+            modelAndView.addObject("edit", promotion);
+            modelAndView.addObject("message","Edit Success!");
+            return modelAndView;
+        }
     }
     @GetMapping("delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {
