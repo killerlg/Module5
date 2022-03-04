@@ -92,8 +92,8 @@ public class PromotionController {
     }
 
     @PostMapping("delete")
-    public ModelAndView delete(@PathVariable("id") Long id, Pageable pageable) {
-        promotionService.delete(id);
+    public ModelAndView delete(@ModelAttribute("promotion") Promotion promotion, Pageable pageable) {
+        promotionService.delete(promotion.getId());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("message","Delete Success!");
         modelAndView.addObject("promotions",promotionService.findAll(pageable));
