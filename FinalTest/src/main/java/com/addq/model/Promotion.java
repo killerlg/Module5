@@ -16,9 +16,9 @@ public class Promotion implements Validator {
     @Column(name = "id", nullable = false)
     private Long id;
     private String title;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date timeStart;
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date timeEnd;
     private Long value;
     private String description;
