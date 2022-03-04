@@ -6,6 +6,10 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -102,6 +106,16 @@ public class Promotion implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "description", "description.empty");
         if (value<=10000){
             errors.rejectValue("value", "value.value");
+        }
+        if (timeEnd.before(timeStart) || timeEnd.equals(timeStart)) {
+            errors.rejectValue("timeEnd", "timeEnd.before");
+        }
+        Date date = new Date();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        if (timeStart.before(date)) {
+            errors.rejectValue("timeStart", "timeStart.before");
         }
     }
 }
