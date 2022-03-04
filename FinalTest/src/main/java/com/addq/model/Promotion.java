@@ -1,5 +1,6 @@
 package com.addq.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -15,7 +16,9 @@ public class Promotion implements Validator {
     @Column(name = "id", nullable = false)
     private Long id;
     private String title;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date timeStart;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date timeEnd;
     private Long value;
     private String description;
