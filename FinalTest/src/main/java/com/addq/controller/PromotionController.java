@@ -77,8 +77,8 @@ public class PromotionController {
         }
         else {
             promotionService.save(promotion);
-            modelAndView.setViewName("create");
-            modelAndView.addObject("edit", promotion);
+            modelAndView.setViewName("edit");
+            modelAndView.addObject("promotion", promotion);
             modelAndView.addObject("message","Edit Success!");
             return modelAndView;
         }
