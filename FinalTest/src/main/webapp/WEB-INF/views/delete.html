@@ -10,7 +10,7 @@
     </a></button>
 </p>
 <div th:text="${message}"></div>
-<form th:action="@{/save}" th:object="${promotion}"
+<form th:action="@{/delete}" th:object="${promotion}"
       method="POST">
     <input th:type="hidden" name="id" th:field="*{id}">
 
