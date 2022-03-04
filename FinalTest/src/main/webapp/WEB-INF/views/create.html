@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>Add Promotion</h3>
+
+<p>
+    <button type="button" class="btn btn-primary"><a th:href="@{/}" style="text-decoration: none; color: white">
+        Back to promotion list
+    </a></button>
+</p>
+<div th:text="${message}"></div>
+    <form th:action="@{/save}" th:object="${promotion}"
+          method="POST">
+
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" th:field="*{title}">
+            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Tittle Error</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Time Start</label>
+            <input type="date" class="form-control" th:field="*{timeStart}">
+            <div th:if="${#fields.hasErrors('timeStart')}" th:errors="*{timeStart}">Time Start Error</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Time End</label>
+            <input type="date" class="form-control" th:field="*{timeEnd}">
+            <div th:if="${#fields.hasErrors('timeEnd')}" th:errors="*{timeEnd}">Time StEndart Error</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Discount Rate</label>
+            <input type="number" class="form-control" th:field="*{value}">
+            <div th:if="${#fields.hasErrors('value')}" th:errors="*{value}">Value Error</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" th:field="*{description}" rows="3"></textarea>
+            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Desciption Error</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

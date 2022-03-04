@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+</head>
+<body>
+<div th:text="${message}"></div>
+
+<h1>List Promotion</h1>
+<form class="row g-3">
+    <div class="col-auto">
+        <button type="button" class="btn btn-primary"><a th:href="@{/create}" style="text-decoration: none; color: white">
+            Add Promotion
+        </a></button>
+    </div>
+    <div class="col-auto">
+        <input type="text" class="form-control" id="search" name = "search" placeholder="Search...">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Search</button>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Time Start</th>
+            <th>Time End</th>
+            <th>Discount rate</th>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody th:each="promotion : ${promotions}">
+        <tr>
+            <td th:text="${promotion.title}"></td>
+            <td th:text="${promotion.timeStart}"></td>
+            <td th:text="${promotion.timeEnd}"></td>
+            <td th:text="${promotion.value}"></td>
+            <td th:text="${promotion.description}"></td>
+            <td><a th:href="@{/edit/__${promotion.id}__ }">Edit</a></td>
+            <td><a th:href="@{/delete/__${promotion.id}__ }">Delete</a></td>
+        </tr>
+
+
+
+    </tbody>
+</table>
+<div>
+    <a th:href="@{'/'(page=${promotions.number - 1})}" th:if="${promotions.hasPrevious()}">Previous</a>
+    <span th:text="${promotions.number + 1}"></span>/<span th:text="${promotions.totalPages}"></span>
+    <a th:href="@{'/'(page=${promotions.number + 1})}" th:if="${promotions.hasNext()}">Next</a>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
